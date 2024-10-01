@@ -72,7 +72,7 @@ const body = { serviceId: "${id}", code: "5T423R" };`;
                         <p>If the user has a subscription, the API will return a status of true. Otherwise, it will return a status of false.</p>
                     </div>
                     <div className="right" style={{textAlign: "start"}}>
-                        <p style={{ marginTop: '0px' }}>Your serivce id:</p>
+                        <p style={{ marginTop: '0px' }}>Your serivce id: (Do not share!)</p>
                         <SyntaxHighlighter language="javascript" style={atomOneDark} showLineNumbers>{`serviceId: ${id}`}</SyntaxHighlighter>
                         <p>API url, method and body to approve user:</p>
                         <SyntaxHighlighter language="javascript" style={atomOneDark} showLineNumbers>{data}</SyntaxHighlighter>
@@ -86,6 +86,11 @@ const body = { serviceId: "${id}", code: "5T423R" };`;
                     <div className="left">
                         <div className="inputs">
                             <Link to={process.env.REACT_APP_ONESUBS}><Logo style={{ maxWidth: '140px', maxHeight: '50px' }}/></Link>
+                            <p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#10b981" className="bi bi-check-lg" viewBox="0 0 16 9" style={{ marginRight: '10px' }}>
+                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                                </svg>
+                                OneSubs M tier</p>
                             <p>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#10b981" className="bi bi-check-lg" viewBox="0 0 16 9" style={{ marginRight: '10px' }}>
                                     <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
@@ -116,11 +121,6 @@ const body = { serviceId: "${id}", code: "5T423R" };`;
                                     <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
                                 </svg>
                                 Exclusive Early Access</p>
-                            <p>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#10b981" className="bi bi-check-lg" viewBox="0 0 16 9" style={{ marginRight: '10px' }}>
-                                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
-                                </svg>
-                                Special Discounts and Offers</p>
                             <p style={{ marginBottom: "30px" }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#10b981" className="bi bi-check-lg" viewBox="0 0 16 9" style={{ marginRight: '10px' }}>
                                     <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
@@ -132,7 +132,7 @@ const body = { serviceId: "${id}", code: "5T423R" };`;
                     </div>
                     <div className="right" style={{textAlign: "start"}}>
                         <h2 style={{ marginTop: "0px" }}>Basic implementation</h2>
-                        <p>Create an access form with input type text, and submit button.</p>
+                        <p>Create an access form with input type text, and submit button. Show your service tier (e.g. OneSubs M tier).</p>
                         <p>Add validation API for this form. When user submits access code, API will check and send the status.</p>
                         <p>If the status is true, you will give an access for 24 hours.</p>
                         <p style={{ color: "#334155", fontWeight: "bold" }}>Please note that you need to add the OneSubs logo with a link to our website.</p>

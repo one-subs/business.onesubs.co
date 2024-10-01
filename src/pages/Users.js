@@ -12,9 +12,9 @@ function Users() {
     const [month, setMonth] = useState(new Date().getMonth());
 
     useEffect(() => {
-        const getId = async () => { 
+        const getId = async () => {
             try {
-                const response = await request(`/partner/history-data?month=${month+1}`, "GET", null, {
+                const response = await request(`/partner/history?month=${month+1}`, "GET", null, {
                     authorization: `Bearer ${auth.token}`
                 });
                 if (response) setData(response.data);

@@ -51,10 +51,10 @@ const createChart = (list, month) => {
     let max = 0
 
     while (date.getMonth() !== nextMonth.getMonth()) {
-        const iso = date.toISOString().split('T')[0];
+        const iso = date.getDate();
         labels.push(iso);
 
-        const users = list.filter((item) => { return item.date === iso });
+        const users = list.filter((item) => { return item.dayUTC === iso });
 
         datasets.push(users.length);
         

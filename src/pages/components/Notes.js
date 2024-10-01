@@ -23,10 +23,22 @@ function Navigation() {
     }, [auth.token, data, request]);
 
 
-    if (data && data.status === "active") {
+    if (data && data.companyInfo === "rejected") {
+        return (
+            <div className="notes">
+                <p>Your account activation was rejected. Please check your email for more details.</p>
+            </div>
+        );
+    } else if (data && data.status === "active") {
         return (
             <div className="notes">
                 <p>Your account status is active, updated in {data.status_update.split("T")[0]}.</p>
+            </div>
+        );
+    } else if (data && data.status === "pending") {
+        return (
+            <div className="notes">
+                <p>Your account is pending approval and may take up to 3 days.</p>
             </div>
         );
     } else if (data && data.status === "testing") {

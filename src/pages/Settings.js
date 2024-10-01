@@ -15,18 +15,21 @@ function Settings() {
   const [name, setName] = useState("-none-");
   const [website, setWebsite] = useState("-none-");
   const [description, setDescription] = useState("-none-");
+  const [keywords, setKeywords] = useState("-none-");
   const [message, setMessage] = useState(false);
   
   const [price, setPrice] = useState("-none-");
   
   const [bankName, setBankName] = useState("-none-");
   const [bankNumber, setBankNumber] = useState("-none-");
+  const [bankSwift, setBankSwift] = useState("-none-");
   
   const [companyName, setCompanyName] = useState("-none-");
   const [companyNumber, setCompanyNumber] = useState("-none-");
   const [companyTax, setCompanyTax] = useState("-none-");
   const [companyCountry, setCompanyCountry] = useState("-none-");
   const [companyCity, setCompanyCity] = useState("-none-");
+  const [companyZipCode, setCompanyZipCode] = useState("-none-");
   const [companyAddress1, setCompanyAddress1] = useState("-none-");
   const [companyAddress2, setCompanyAddress2] = useState("-none-");
   const [companyPhone, setCompanyPhone] = useState("-none-");
@@ -44,16 +47,19 @@ function Settings() {
               setName(response.name || "");
               setWebsite(response.website || "");
               setDescription(response.description || "");
+              setKeywords(response.keywords || "");
               setLogo(response.logo || "");
               setPrice(response.price || "");
               setTier(response.tier || "");
               setBankName(response.bankName || "");
               setBankNumber(response.bankNumber || "");
+              setBankSwift(response.bankSwift || "");
               setCompanyName(response.companyName || "");
               setCompanyNumber(response.companyNumber || "");
               setCompanyTax(response.companyTax || "");
               setCompanyCountry(response.companyCountry || "");
               setCompanyCity(response.companyCity || "");
+              setCompanyZipCode(response.companyZipCode || "");
               setCompanyAddress1(response.companyAddress1 || "");
               setCompanyAddress2(response.companyAddress2 || "");
               setCompanyPhone(response.companyPhone || "");
@@ -65,7 +71,10 @@ function Settings() {
   }, [auth.token, name, request]);
 
   const update = async () => {
-    const response = await request(`/partner/partner-data`, "POST", { name, website, description, logo, price, bankName, bankNumber }, {
+    const keywordList = (typeof keywords === 'object') ? keywords : keywords.split(', ')
+    const response = await request(`/partner/partner-data`, "PUT", {
+      name, website, description, keywords: keywordList, logo, price, bankName, bankNumber, bankSwift
+    }, {
         authorization: `Bearer ${auth.token}`
     });
     if (response) {
@@ -76,9 +85,9 @@ function Settings() {
   }
 
   const setCompanyInfo = async () => {
-    const response = await request(`/partner/company-data`, "POST", { 
-      companyName, companyNumber, companyTax, companyCountry,
-      companyCity, companyAddress1, companyAddress2, companyPhone
+    const response = await request(`/partner/company-data`, "PUT", { 
+      companyName, companyNumber, companyTax, companyCountry, companyCity,
+      companyZipCode, companyAddress1, companyAddress2, companyPhone
     }, {
         authorization: `Bearer ${auth.token}`
     });
@@ -107,6 +116,7 @@ function Settings() {
           <div className="back" style={{background: "none"}}>
             {error ? <Alert message={error} type={"error"} clearError={clearError}/> : ""}
             {message ? <Alert message={"Successfully updated!"} type={"success"} clearError={() => setMessage(false)}/> : ""}
+            
             <div className="form" style={{boxShadow: "none", marginTop: "60px"}}>
               <h1>Service logo</h1>
               <div className="input-container">
@@ -116,6 +126,7 @@ function Settings() {
               <p style={{ width: "100%" }}>Add the url to your service logo to recognize your tool in our service page.</p>
               <button style={{marginTop: "5px", marginBottom: "10px"}} onClick={() => update()}>Update</button>
             </div>
+
             <div className="form" style={{boxShadow: "none", marginTop: "30px"}}>
               <h1>Service price { tier && tier !== '-none-' ? `(${tier})` : "" }</h1>
               <div className="input-container">
@@ -125,15 +136,20 @@ function Settings() {
               <p style={{ width: "100%" }}>Add the service price in USD per user per day, you will earn this amount for each user a day.</p>
               <button style={{marginTop: "5px", marginBottom: "10px"}} onClick={() => update()}>Update</button>
             </div>
+
             <div className="form" style={{boxShadow: "none", marginTop: "30px"}}>
               <h1>Service info</h1>
               <div className="input-container">
                 <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)}/>
-                <label htmlFor="input">name*</label>
+                <label htmlFor="input">Name*</label>
               </div>
               <div className="input-container">
                 <input type="text" name="website" value={website} onChange={(e) => setWebsite(e.target.value)}/>
-                <label htmlFor="input">website*</label>
+                <label htmlFor="input">Website*</label>
+              </div>
+              <div className="input-container">
+                <input type="text" name="keywords" value={keywords} onChange={(e) => setKeywords(e.target.value)}/>
+                <label htmlFor="input">Enter keywords using commas*</label>
               </div>
               <div className="textarea-container">
                   <textarea id="textarea" value={description}  onChange={(e) => setDescription(e.target.value)}/>
@@ -142,6 +158,7 @@ function Settings() {
               <p style={{ width: "100%" }}>Please ensure your information is accurate and up to date. This helps us provide you with the best service possible.</p>
               <button style={{marginTop: "5px", marginBottom: "10px"}} onClick={() => update()}>Update</button>
             </div>
+
             <div className="form" style={{boxShadow: "none", marginTop: "30px"}}>
               <h1>Company info</h1>
               <div className="input-container">
@@ -166,11 +183,15 @@ function Settings() {
                 <label htmlFor="input">City or province*</label>
               </div>
               <div className="input-container">
-                <input type="text" name="company-country" value={companyAddress1} onChange={(e) => setCompanyAddress1(e.target.value)}/>
+                <input type="text" name="company-zip-code" value={companyZipCode} onChange={(e) => setCompanyZipCode(e.target.value)}/>
+                <label htmlFor="input">Zip code*</label>
+              </div>
+              <div className="input-container">
+                <input type="text" name="company-address-2" value={companyAddress1} onChange={(e) => setCompanyAddress1(e.target.value)}/>
                 <label htmlFor="input">Address line 1*</label>
               </div>
               <div className="input-container">
-                <input type="text" name="company-country" value={companyAddress2} onChange={(e) => setCompanyAddress2(e.target.value)}/>
+                <input type="text" name="company-address-2" value={companyAddress2} onChange={(e) => setCompanyAddress2(e.target.value)}/>
                 <label htmlFor="input">Address line 2</label>
               </div>
               <p style={{ marginBottom: "40px", marginTop: "50px", fontWeight: "bold" }}>Company contact information.</p>
@@ -181,6 +202,7 @@ function Settings() {
               <p style={{ fontWeight: "bold", width: "100%" }}>Double check your company information before saving. To update company info after first activation of your service, you will need to send the request email to OneSubs for Business email address. Make sure that your bank located country will be the same as your company address country.</p>
               <button style={{ marginTop: "5px", marginBottom: "10px" }} onClick={() => setCompanyInfo()}>Save</button>
             </div>
+
             <div className="form" style={{boxShadow: "none", marginTop: "30px"}}>
               <h1>Bank info</h1>
               <p style={{ marginBottom: "40px", fontWeight: "bold" }}>Country: { companyCountry.length > 0 ? companyCountry : '-' }</p>
@@ -189,12 +211,17 @@ function Settings() {
                 <label htmlFor="input">Bank name*</label>
               </div>
               <div className="input-container">
+                <input type="text" name="swift" value={bankSwift} onChange={(e) => setBankSwift(e.target.value)}/>
+                <label htmlFor="input">Swift*</label>
+              </div>
+              <div className="input-container">
                 <input type="text" name="iban" value={bankNumber} onChange={(e) => setBankNumber(e.target.value)}/>
                 <label htmlFor="input">Bank account number (or IBAN if applicable)*</label>
               </div>
               <p style={{ width: "100%" }}>Please note that the currency we transfer to your bank account will be in USD.</p>
               <button style={{ marginTop: "5px", marginBottom: "10px" }} onClick={() => update()}>Update</button>
             </div>
+
             <div className="form" style={{ boxShadow: "none", marginTop: "90px" }}>
               <h1>Activation</h1>
               <p style={{ width: "100%" }}>Before starting, please, read the <Link to={`${process.env.REACT_APP_ONESUBS}/business-rules`} style={{ color: "#10b981" }}><b>Business Account Rules and Policy</b></Link> at OneSubs. To accept the rules and activate your service, write "activate" below and submit.</p>
@@ -206,6 +233,7 @@ function Settings() {
               <p style={{ width: "100%" }}>Note that you can update the service logo, price, service information or bank account number only in testing mode.</p>
               <button style={{ marginTop: "5px", marginBottom: "10px" }} onClick={() => activate()}>Submit</button>
             </div>
+
           </div>
         </div>
 
