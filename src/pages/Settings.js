@@ -38,33 +38,33 @@ function Settings() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getData = async () => { 
-        try {
-            const response = await request(`/partner/partner-data`, "GET", null, {
-                authorization: `Bearer ${auth.token}`
-            });
-            if (response) {
-              setName(response.name || "");
-              setWebsite(response.website || "");
-              setDescription(response.description || "");
-              setKeywords(response.keywords || "");
-              setLogo(response.logo || "");
-              setPrice(response.price || "");
-              setTier(response.tier || "");
-              setBankName(response.bankName || "");
-              setBankNumber(response.bankNumber || "");
-              setBankSwift(response.bankSwift || "");
-              setCompanyName(response.companyName || "");
-              setCompanyNumber(response.companyNumber || "");
-              setCompanyTax(response.companyTax || "");
-              setCompanyCountry(response.companyCountry || "");
-              setCompanyCity(response.companyCity || "");
-              setCompanyZipCode(response.companyZipCode || "");
-              setCompanyAddress1(response.companyAddress1 || "");
-              setCompanyAddress2(response.companyAddress2 || "");
-              setCompanyPhone(response.companyPhone || "");
-            }
-        } catch (err) {}
+    const getData = async () => {
+      try {
+        const response = await request(`/partner/partner-data`, "GET", null, {
+          authorization: `Bearer ${auth.token}`
+        });
+        if (response.status) {
+          setName(response.data.name || "");
+          setWebsite(response.data.website || "");
+          setDescription(response.data.description || "");
+          setKeywords(response.data.keywords || "");
+          setLogo(response.data.logo || "");
+          setPrice(response.data.price || "");
+          setTier(response.data.tier || "");
+          setBankName(response.data.bankName || "");
+          setBankNumber(response.data.bankNumber || "");
+          setBankSwift(response.data.bankSwift || "");
+          setCompanyName(response.data.companyName || "");
+          setCompanyNumber(response.data.companyNumber || "");
+          setCompanyTax(response.data.companyTax || "");
+          setCompanyCountry(response.data.companyCountry || "");
+          setCompanyCity(response.data.companyCity || "");
+          setCompanyZipCode(response.data.companyZipCode || "");
+          setCompanyAddress1(response.data.companyAddress1 || "");
+          setCompanyAddress2(response.data.companyAddress2 || "");
+          setCompanyPhone(response.data.companyPhone || "");
+        }
+      } catch (err) {}
     }
     
     if (name === "-none-") getData();
@@ -77,7 +77,7 @@ function Settings() {
     }, {
         authorization: `Bearer ${auth.token}`
     });
-    if (response) {
+    if (response.status) {
       setMessage(true);
       window.scrollTo(0, 0);
       navigate(0);
@@ -91,7 +91,7 @@ function Settings() {
     }, {
         authorization: `Bearer ${auth.token}`
     });
-    if (response) {
+    if (response.status) {
       setMessage(true);
       window.scrollTo(0, 0);
       navigate(0);
@@ -102,7 +102,7 @@ function Settings() {
     const response = await request(`/partner/status`, "POST", { status }, {
         authorization: `Bearer ${auth.token}`
     });
-    if (response) {
+    if (response.status) {
       setMessage(true);
       window.scrollTo(0, 0);
       navigate(0);

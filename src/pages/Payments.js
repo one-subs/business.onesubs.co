@@ -12,12 +12,12 @@ function Payments() {
     const [month, setMonth] = useState(new Date().getMonth());
 
     useEffect(() => {
-        const getId = async () => { 
+        const getId = async () => {
             try {
                 const response = await request(`/partner/payment-data?month=${month+1}`, "GET", null, {
                     authorization: `Bearer ${auth.token}`
                 });
-                if (response) setData(response);
+                if (response.status) setData(response.data);
             } catch (err) {}
         }
         

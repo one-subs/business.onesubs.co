@@ -10,12 +10,13 @@ function Navigation() {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        const getData = async () => { 
+        const getData = async () => {
             try {
                 const response = await request(`/partner/partner-data`, "GET", null, {
                     authorization: `Bearer ${auth.token}`
                 });
-                if (response) setData(response);
+
+                if (response.status) setData(response.data);
             } catch (err) {}
         }
         

@@ -43,10 +43,10 @@ function Overview() {
     useEffect(() => {
         const getId = async () => { 
             try {
-                const response = await request("/partner/id", "GET", null, {
+                const response = await request("/partner/partner-data", "GET", null, {
                     authorization: `Bearer ${auth.token}`
                 });
-                if (response) setId(response.id);
+                if (response) setId(response._id);
                 else setId("Error to catch your ID");
             } catch (err) {
                 console.log(err.message);
